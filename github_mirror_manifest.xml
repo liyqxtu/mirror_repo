@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
-  <remote  name="github"
-           fetch="https://github.com"
-           review="review.cyanogenmod.com" />
-
-  <default revision="master"
-           remote="github"
-           sync-j="4" />
-
   <project name="CyanogenMod/android" />
   <project name="CyanogenMod/android_abi_cpp" />
   <project name="CyanogenMod/android_bionic" />
@@ -610,6 +602,7 @@
   <project name="CyanogenMod/CMBalance" />
   <project name="CyanogenMod/CMStatsServer" />
   <project name="CyanogenMod/device_htc_marvel" />
+  <project name="CyanogenMod/device_htc_ville" />
   <project name="CyanogenMod/geeksphone-kernel-zero" />
   <project name="CyanogenMod/GetCM" />
   <project name="CyanogenMod/hp-kernel-tenderloin" />
@@ -639,4 +632,54 @@
   <project name="CyanogenMod/themes-platform-vendor-tmobile-apps-ThemeChooser" />
   <project name="CyanogenMod/tools_repo" />
   <project name="CyanogenMod/zte-kernel-msm7x27" />
+  <project name="teamhacksung/android_bootable_recovery" />
+  <project name="teamhacksung/android_device_samsung_aries-common" />
+  <project name="teamhacksung/android_device_samsung_captivatemtd" />
+  <project name="teamhacksung/android_device_samsung_cooper" />
+  <project name="teamhacksung/android_device_samsung_epic4gtouch" />
+  <project name="teamhacksung/android_device_samsung_fascinatemtd" />
+  <project name="teamhacksung/android_device_samsung_galaxys2" />
+  <project name="teamhacksung/android_device_samsung_galaxys2-common" />
+  <project name="teamhacksung/android_device_samsung_galaxysbmtd" />
+  <project name="teamhacksung/android_device_samsung_galaxysl" />
+  <project name="teamhacksung/android_device_samsung_galaxysmtd" />
+  <project name="teamhacksung/android_device_samsung_i777" />
+  <project name="teamhacksung/android_device_samsung_i9100" />
+  <project name="teamhacksung/android_device_samsung_infuse4g" />
+  <project name="teamhacksung/android_device_samsung_n7000" />
+  <project name="teamhacksung/android_device_samsung_tass" />
+  <project name="teamhacksung/android_device_samsung_vibrantmtd" />
+  <project name="teamhacksung/android_device_telechips_m801" />
+  <project name="teamhacksung/android_external_ffmpeg" />
+  <project name="teamhacksung/android_kernel_samsung_aries" />
+  <project name="teamhacksung/android_kernel_samsung_dempsey" />
+  <project name="teamhacksung/android_kernel_samsung_hugo" />
+  <project name="teamhacksung/android_kernel_samsung_latona" />
+  <project name="teamhacksung/android_kernel_samsung_msm" />
+  <project name="teamhacksung/android_kernel_samsung_smdk4210" />
+  <project name="teamhacksung/android_kernel_samsung_smdk4210_new" />
+  <project name="teamhacksung/android_kernel_samsung_t1_gb" />
+  <project name="teamhacksung/android_kernel_samsung_tuna" />
+  <project name="teamhacksung/android_packages_apps_Trebuchet" />
+  <project name="teamhacksung/android_tools_samsung_galaxys2" />
+  <project name="teamhacksung/android_vendor_cm" />
+  <project name="teamhacksung/android_vendor_cyanogen" />
+  <project name="teamhacksung/android_vendor_samsung_galaxysl" />
+  <project name="teamhacksung/buildscripts" />
+  <project name="teamhacksung/clockworkmod_galaxysl" />
+  <project name="teamhacksung/epsylon_kernel_tegra" />
+  <project name="teamhacksung/galaxys2_kernel_repack" />
+  <project name="teamhacksung/GT-I9070_ClockworkMod-Recovery" />
+  <project name="teamhacksung/GT-I9100G_ClockworkMod-Recovery" />
+  <project name="teamhacksung/GT-I9100_ClockworkMod-Recovery" />
+  <project name="teamhacksung/Heimdall" />
+  <project name="teamhacksung/hudson" />
+  <project name="teamhacksung/proprietary_vendor_samsung" />
+  <project name="teamhacksung/proprietary_vendor_telechips" />
+  <project name="teamhacksung/releasetools" />
+  <project name="teamhacksung/samsung-kernel-c1att" />
+  <project name="teamhacksung/samsung-kernel-c1spr" />
+  <project name="teamhacksung/samsung-kernel-p6200" />
+  <project name="teamhacksung/samsung-kernel-sgh_i896" />
+  <project name="teamhacksung/samsung_kernel_gt-p6210" />
 </manifest>

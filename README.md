@@ -1,4 +1,8 @@
 mirror_repo
 ===========
+work2mirror.py  
+	make workdir to mirror repo
 
-make_github_mirror
+manifest.py    
+	make github projects mirror manifest
+

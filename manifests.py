@@ -30,7 +30,7 @@ def indent(elem, level=0):
 
 def add_to_manifest(repositories):
     try:
-        lm = ElementTree.parse("cm_mirror_manifest.xml")
+        lm = ElementTree.parse("github_mirror_manifest.xml")
         lm = lm.getroot()
     except:
         lm = ElementTree.Element("manifest")
@@ -39,14 +39,13 @@ def add_to_manifest(repositories):
         repo_name = repository['repository']
         repo_target = repository['target_path']
         if exists_in_tree(lm, repo_name):
-            print 'CyanogenMod/%s already exists' % (repo_name)
+            print '%s already exists' % (repo_name)
             continue
         if not repo_target is None:
 		print "not_none"
 
         if repo_target is None :
-		print 'Adding dependency: CyanogenMod/%s ' % (repo_name)
-		project = ElementTree.Element("project", attrib = {"name": "CyanogenMod/%s" % repo_name})
+		project = ElementTree.Element("project", attrib = {"name": "%s" % repo_name})
 
         if 'branch' in repository:
             project.set('revision',repository['branch'])
@@ -57,41 +56,40 @@ def add_to_manifest(repositories):
     raw_xml = ElementTree.tostring(lm)
     raw_xml = '<?xml version="1.0" encoding="UTF-8"?>\n' + raw_xml
 
-    f = open('cm_mirror_manifest.xml', 'w')
+    f = open('github_mirror_manifest.xml', 'w')
     f.write(raw_xml)
     f.close()
 
 
 print "start"
-repositories = []
 
-page = 1
-while 1:
-    result = json.loads(urllib2.urlopen("https://api.github.com/users/CyanogenMod/repos?page=%d" % page).read())
-    if len(result) == 0:
-        break
-    for res in result:
-#	print "\n"
-#	print res
-#	print "\n"
-        repositories.append(res)
-    page = page + 1
+github_users=["CyanogenMod","teamhacksung"]
+for github_user  in  github_users:
+	repositories = []
 
-print "middle"
+	page = 1
 
-for repository in repositories:
-#        print repository
-        repo_name = repository['name']
-	print repo_name
+	while 1:
+	    result = json.loads(urllib2.urlopen("https://api.github.com/users/%s/repos?page=%d" % (github_user,page)).read())
+	    if len(result) == 0:
+		break
+	    for res in result:
+		repositories.append(res)
+	    page = page + 1
 
-        add_to_manifest([{'repository':repo_name,'target_path':None}])
+	print "middle"
+
+	for repository in repositories:
+	#        print repository
+		repo_name = repository['full_name']
+		print repo_name
+		add_to_manifest([{'repository':repo_name,'target_path':None}])
 
 #            print "Syncing repository to retrieve project."
 #            os.system('repo sync %s' % repo_path)
 #            print "Repository synced!"
-#
 #            fetch_dependencies(repo_path)
 #            print "Done"
 #            sys.exit()
-#
+
 
