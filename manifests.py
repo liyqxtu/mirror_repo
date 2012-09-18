@@ -6,10 +6,14 @@ import json
 import re
 from xml.etree import ElementTree
 
+global  lm
+lm = ElementTree.Element("manifest")
+
 def exists_in_tree(lm, repository):
     for child in lm.getchildren():
-        if child.attrib['name'].endswith(repository):
-            return True
+        if not child.get("name") is None :
+		if child.attrib['name'].endswith(repository):
+		    return True
     return False
 
 # in-place prettyprint formatter
@@ -20,6 +24,7 @@ def indent(elem, level=0):
             elem.text = i + "  "
         if not elem.tail or not elem.tail.strip():
             elem.tail = i
+
         for elem in elem:
             indent(elem, level+1)
         if not elem.tail or not elem.tail.strip():
@@ -29,12 +34,6 @@ def indent(elem, level=0):
             elem.tail = i
 
 def add_to_manifest(repositories):
-    try:
-        lm = ElementTree.parse("github_mirror_manifest.xml")
-        lm = lm.getroot()
-    except:
-        lm = ElementTree.Element("manifest")
-
     for repository in repositories:
         repo_name = repository['repository']
         repo_target = repository['target_path']
@@ -52,10 +51,17 @@ def add_to_manifest(repositories):
 
         lm.append(project)
 
+def manifest_head():
+#    lm = ElementTree.Element("manifest")
+    remote= ElementTree.Element("remote", attrib = {"name":"github","fetch":"https://github.com","review":"review.cyanogenmod.com"})
+    default= ElementTree.Element("default", attrib = {"revision":"master","remote":"github","sync-j":"4"})
+    lm.append(remote)
+    lm.append(default)
+
+def manifest_tail():
     indent(lm, 0)
     raw_xml = ElementTree.tostring(lm)
     raw_xml = '<?xml version="1.0" encoding="UTF-8"?>\n' + raw_xml
-
     f = open('github_mirror_manifest.xml', 'w')
     f.write(raw_xml)
     f.close()
@@ -64,11 +70,10 @@ def add_to_manifest(repositories):
 print "start"
 
 github_users=["CyanogenMod","teamhacksung"]
+manifest_head()
 for github_user  in  github_users:
 	repositories = []
-
 	page = 1
-
 	while 1:
 	    result = json.loads(urllib2.urlopen("https://api.github.com/users/%s/repos?page=%d" % (github_user,page)).read())
 	    if len(result) == 0:
@@ -85,10 +90,5 @@ for github_user  in  github_users:
 		print repo_name
 		add_to_manifest([{'repository':repo_name,'target_path':None}])
 
-#            print "Syncing repository to retrieve project."
-#            os.system('repo sync %s' % repo_path)
-#            print "Repository synced!"
-#            fetch_dependencies(repo_path)
-#            print "Done"
-#            sys.exit()
+manifest_tail()
 
