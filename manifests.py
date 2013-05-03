@@ -4,6 +4,8 @@ import sys
 import urllib2
 import json
 import re
+from StringIO import StringIO
+import base64
 from xml.etree import ElementTree
 
 global  lm
@@ -68,27 +70,38 @@ def manifest_tail():
 
 
 print "start"
+username="username"
+password="password"
 
-github_users=["CyanogenMod","teamhacksung"]
+github_users=["CyanogenMod"]
+
 manifest_head()
+
 for github_user  in  github_users:
-	repositories = []
-	page = 1
-	while 1:
-	    result = json.loads(urllib2.urlopen("https://api.github.com/users/%s/repos?page=%d" % (github_user,page)).read())
-	    if len(result) == 0:
-		break
-	    for res in result:
-		repositories.append(res)
-	    page = page + 1
+    repositories = []
+    page = 1
+    while 1:
+        req = urllib2.Request("https://api.github.com/users/%s/repos?page=%d" % (github_user,page))
+        req.add_header("Authorization", "Basic " + base64.urlsafe_b64encode("%s:%s" % (username, password)))
+        req.add_header("Content-Type", "application/json")
+        req.add_header("Accept", "application/json")
+        res = urllib2.urlopen(req)
+        data=res.read()
+        #result = json.loads(StringIO(data));
+        result = json.loads(data);
+        if len(result) == 0:
+            break
+        for res in result:
+            repositories.append(res)
+        page = page + 1
 
-	print "middle"
+    print "middle"
 
-	for repository in repositories:
-	#        print repository
-		repo_name = repository['full_name']
-		print repo_name
-		add_to_manifest([{'repository':repo_name,'target_path':None}])
+    for repository in repositories:
+#        print repository
+        repo_name = repository['full_name']
+        print repo_name
+        add_to_manifest([{'repository':repo_name,'target_path':None}])
 
 manifest_tail()
 
